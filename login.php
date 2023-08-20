@@ -24,7 +24,11 @@
         }
 
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            // name、password が一致したらメイン画面にリダイレクト
+            // name、password が一致したらセッション開始
+            session_start();
+            $_SESSION["loginPermission"] = true;
+            
+            // メイン画面にリダイレクト
             header("Location: main.php");
             exit;
         } else {

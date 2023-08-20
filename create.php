@@ -1,4 +1,5 @@
 <?php
+    require_once('login_check.php');
     require('db_connect.php');
 
     $title = $_POST['title'];

@@ -1,4 +1,5 @@
 <?php
+    require_once('login_check.php');
     require('db_connect.php');
 
     $pdo = db_connect();
@@ -31,8 +32,13 @@
     <div class="main-page-title">
         <h1>My TODO</h1>
     </div>
-    <div class="create-btn-area">
-        <a href="create.php" ><button type="button" class="btn btn-primary">新規登録</button></a>
+    <div class="btn-area">
+        <div class="create-btn-area">
+            <a href="create.php" ><button type="button" class="btn btn-primary">新規登録</button></a>
+        </div>
+        <div class="logout-btn-area">
+            <a href="logout.php" ><button type="button" class="btn btn-danger">ログアウト</button></a>
+        </div>
     </div>
     
     <!-- Option 1: Bootstrap Bundle with Popper -->
