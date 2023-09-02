@@ -35,13 +35,15 @@ form {
   font-size: 18px;
   margin-bottom: 50px;
 }
-
 input {
   height: 45px;
 }
-
 input::placeholder {
   color: rgb(140, 161, 228);
+}
+input:focus-visible {
+  outline: none;
+  border-bottom-width: 3px;
 }
 
 textarea::placeholder {

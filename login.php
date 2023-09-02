@@ -1,6 +1,12 @@
 <?php
     // DB接続用ファイルの読込（db_connectメソッド使用のため）
     require('db_connect.php');
+    session_start();
+
+    // エラーメッセージがあれば削除
+    if($_SESSION["loginErrorMessage"]) {
+        unset($_SESSION["loginErrorMessage"]);
+    }
 
     // フォーム送信された値の取得
     $name     = $_POST['name'];
@@ -24,18 +30,16 @@
         }
 
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            // name、password が一致したらセッション開始
-            session_start();
+            // name、password が一致したらセッションに保持
             $_SESSION["loginPermission"] = true;
-            
+
             // メイン画面にリダイレクト
             header("Location: main.php");
             exit;
         } else {
-            echo '<font color="red">パスワードか名前に間違いがあります。</font>';
+            $_SESSION["loginErrorMessage"] = "パスワードか名前に間違いがあります。";
         }
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +62,8 @@
         <input type="password" class="input-area" name="password" placeholder="Your Password" required> <br>
         <input type="submit" class="input-area submit" name="submit" value="Log in">
     </form>
+    <p style="color: red;"><?php echo $_SESSION["loginErrorMessage"] ?></p>
+    <p><a href="signup.php" class="link-signup">会員登録はこちら</a></p>
 </body>
 
 </html>
