@@ -51,11 +51,46 @@
     </div>
     <form action="" method="POST">
         <input type="text" class="input-area" name="name" placeholder="User Name" required> <br>
-        <input type="password" class="input-area" name="password" placeholder="Password" required> <br>
+        <input type="password" id="password" class="input-area password" name="password" placeholder="Password" required> <br>
+        <div class="toggle-password-disply-area">
+            <a type="button" id="togglePasswordDisply" class="toggle-password-disply">パスワード表示切替え</a>
+        </div>
         <input type="submit" class="input-area submit" name="submit" value="Sign up">
     </form>
     <p style="color: red;"><?php echo $error_message ?></p>
         <p><a href="login.php">ログイン</a></p>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const toggleButton = document.getElementById('togglePasswordDisply');
+
+        toggleButton.addEventListener('click', () => {
+            // パスワードのマスキングON・OFF切替え
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    </script>
+    <style scope>
+        .password {
+            margin-bottom: 10px;
+        }
+        .toggle-password-disply-area {
+            width: 600px;
+            margin: 0 auto;
+        }
+        .toggle-password-disply {
+            display: block;
+            text-align: right;
+            margin-bottom: 16px;
+            color: rgb(73, 140, 255);
+        }
+        .toggle-password-disply:hover {
+            cursor: pointer;
+        }
+    </style>
 </body>
 
 </html>
