@@ -39,7 +39,7 @@ input {
   height: 45px;
 }
 input::placeholder {
-  color: rgb(140, 161, 228);
+  color: rgb(172, 189, 244);
 }
 input:focus-visible {
   outline: none;

@@ -58,8 +58,8 @@
         <h1>ログイン</h1>
     </div>
     <form action="" method="POST">
-        <input type="text" class="input-area" name="name" placeholder="Your Name" required> <br>
-        <input type="password" class="input-area" name="password" placeholder="Your Password" required> <br>
+        <input type="text" class="input-area" name="name" placeholder="ユーザー名" required> <br>
+        <input type="password" class="input-area" name="password" placeholder="パスワード" required> <br>
         <input type="submit" class="input-area submit" name="submit" value="Log in">
     </form>
     <p style="color: red;"><?php echo $_SESSION["loginErrorMessage"] ?></p>

@@ -6,6 +6,7 @@
     if ($_SESSION["signupErrorMessage"]) {
         $error_message = $_SESSION["signupErrorMessage"];
     }
+    unset($_SESSION["signupErrorMessage"]);
 
     $name = $_POST['name'];
     $password = $_POST['password'];
@@ -15,18 +16,31 @@
         $pdo = db_connect();
 
         try {
-            $sql = "INSERT INTO users (name, password) VALUES (:name, :password)";
+            // ユーザー名・パスワードの重複チェック
+            $sql = "SELECT * FROM users WHERE name = :name AND password = :password";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":password", $password);
             $stmt->execute();
+            $count = $stmt->rowCount();
+            
+            if ($count > 0) {
+                $_SESSION["signupErrorMessage"] = "既に登録されています。別のユーザー名とパスワードで登録してください。";
+                header("Location: signup.php");
+            } else {
+                $sql = "INSERT INTO users (name, password) VALUES (:name, :password)";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":name", $name);
+                $stmt->bindParam(":password", $password);
+                $stmt->execute();
 
-            // 登録完了画面表示用
-            $_SESSION['registerUserName'] = $name;
-            $_SESSION['registerPassword'] = $password;
+                // 登録完了画面表示用
+                $_SESSION['registerUserName'] = $name;
+                $_SESSION['registerPassword'] = $password;
 
-            // 登録完了時の処理（登録完了ページにリダイレクト）
-            header("Location: signup_done.php");
+                // 登録完了時の処理（登録完了ページにリダイレクト）
+                header("Location: signup_done.php");
+            }
         } catch (PDOException $e) {
             echo $e->$getMessage();
             die();
@@ -50,8 +64,9 @@
         <h1>ユーザー登録</h1>
     </div>
     <form action="" method="POST">
-        <input type="text" class="input-area" name="name" placeholder="User Name" required> <br>
-        <input type="password" id="password" class="input-area password" name="password" placeholder="Password" required> <br>
+        <input 
+            type="text" class="input-area" name="name" placeholder="登録したいユーザー名を入力してください（1〜20文字）"  maxlength="20" required> <br>
+        <input type="password" id="password" class="input-area password" name="password" placeholder="登録したいパスワードを入力してください（1〜20文字）" maxlength="20" required> <br>
         <div class="toggle-password-disply-area">
             <a type="button" id="togglePasswordDisply" class="toggle-password-disply">パスワード表示切替え</a>
         </div>
