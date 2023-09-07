@@ -1,7 +1,9 @@
 <?php
     require_once('login_check.php');
     require('db_connect.php');
+    session_start();
 
+    $user_id = $_SESSION["userId"];
     $id      = $_POST['id'];
     $title   = $_POST['title'];
     $content = $_POST['content'];
@@ -9,8 +11,9 @@
 
     $pdo = db_connect();
     try {
-        $sql = "UPDATE posts SET title = :title, content = :content WHERE id = :id";
+        $sql = "UPDATE posts SET title = :title, content = :content WHERE user_id = :user_id AND id = :id";
         $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(":user_id", $user_id);
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":title", $title);
         $stmt->bindParam(":content", $content);

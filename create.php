@@ -1,7 +1,9 @@
 <?php
     require_once('login_check.php');
     require('db_connect.php');
+    session_start();
 
+    $user_id = $_SESSION["userId"];
     $title = $_POST['title'];
     $content = $_POST['content'];
     $submit = $_POST['submit'];
@@ -10,8 +12,17 @@
         $pdo = db_connect();
 
         try {
-            $sql = "INSERT INTO posts (title, content) VALUES (:title, :content)";
+            // 登録するTODOに振る番号の準備
+            $sql = "SELECT id FROM posts WHERE user_id = :user_id";
             $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(":user_id", $user_id);
+            $stmt->execute();
+            $count = $stmt->rowCount();
+
+            // 新規登録
+            $sql = "INSERT INTO posts (user_id, title, content) VALUES (:user_id, :title, :content)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(":user_id", $user_id);
             $stmt->bindParam(":title", $title);
             $stmt->bindParam(":content", $content);
             $stmt->execute();

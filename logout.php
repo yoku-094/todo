@@ -2,6 +2,7 @@
     session_start();
     // セッションを削除
     unset($_SESSION['loginPermission']);
+    unset($_SESSION['userId']);
 
     if (!$_SESSION['loginPermission']) {
         // ログインページにリダイレクト

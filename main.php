@@ -1,11 +1,15 @@
 <?php
     require_once('login_check.php');
     require('db_connect.php');
+    session_start();
+
+    $user_id = $_SESSION["userId"];
 
     $pdo = db_connect();
     try {
-        $sql = "SELECT * FROM posts ORDER BY time";
+        $sql = "SELECT * FROM posts WHERE user_id = :user_id  ORDER BY id";
         $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("user_id", $user_id);
         $stmt->execute();
     } catch(PDOException $e) {
         echo $e->getMessage();
@@ -48,7 +52,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col" class="col-todo-id">記事ID</th>
+                <th scope="col" class="col-todo-id">No</th>
                 <th scope="col" class="col-todo-title">タイトル</th>
                 <th scope="col" class="col-todo-content">本文</th>
                 <th scope="col" class="col-todo-datetime">作成日</th>
@@ -57,16 +61,22 @@
             </tr>
             </thead>
             <tbody>
-            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
+            <?php 
+                $todo_no = 1;
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
+            ?>
                 <tr>
-                <td><?php echo $row["id"]; ?></td>
+                <td><?php echo $todo_no; ?></td>
                 <td><?php echo $row["title"]; ?></td>
                 <td><?php echo $row["content"]; ?></td>
                 <td><?php echo $row["time"]; ?></td>
                 <td><a href="edit.php?id=<?php echo $row['id'];?>">編集</a></td>
                 <td><a href="delete.php?id=<?php echo $row['id'];?>">削除</a></td>
                 </tr>
-            <?php endwhile; ?>
+            <?php
+                $todo_no++;
+                endwhile;
+            ?>
             </tbody>
         </table>
     </div>

@@ -1,14 +1,17 @@
 <?php
     require_once('login_check.php');
     require('db_connect.php');
+    session_start();
 
+    $_SESSION["userId"];
     // URLのパラメータを取得
     $id = $_GET['id'];
 
     $pdo = db_connect();
     try {
-        $sql = "SELECT * FROM posts WHERE id = :id";
+        $sql = "SELECT * FROM posts WHERE user_id = :user_id AND id = :id";
         $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(":user_id", $user_id);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
       } catch (PDOException $e) {
@@ -43,6 +46,7 @@
         <input type="hidden" name="id" value="<?php echo $id; ?>">
         <input type="submit" class="input-area submit" name="submit" value="更新">
     </form>
+    <a href="main.php" class="return-main">メイン画面に戻る</a>
 </body>
 
 </html>
