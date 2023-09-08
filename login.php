@@ -32,6 +32,7 @@
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             // name、password が一致したらセッションに保持
             $_SESSION["loginPermission"] = true;
+            $_SESSION["registerUserName"] = $row["name"];
             $_SESSION["userId"] = $row["id"];
 
             // メイン画面にリダイレクト

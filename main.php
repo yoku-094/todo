@@ -3,6 +3,7 @@
     require('db_connect.php');
     session_start();
 
+    $user_name = $_SESSION["registerUserName"];
     $user_id = $_SESSION["userId"];
 
     $pdo = db_connect();
@@ -34,7 +35,7 @@
   </head>
   <body>
     <div class="main-page-title">
-        <h1>My TODO</h1>
+        <h1><?php echo $user_name; ?> 's&emsp;TODO</h1>
     </div>
     <div class="btn-area">
         <div class="create-btn-area">
