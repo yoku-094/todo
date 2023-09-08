@@ -54,9 +54,9 @@
             <thead>
             <tr>
                 <th scope="col" class="col-todo-id">No</th>
-                <th scope="col" class="col-todo-title">タイトル</th>
-                <th scope="col" class="col-todo-content">本文</th>
-                <th scope="col" class="col-todo-datetime">作成日</th>
+                <th scope="col" class="col-todo-title">課題</th>
+                <th scope="col" class="col-todo-content">内容</th>
+                <th scope="col" class="col-todo-datetime">作成日時</th>
                 <th scope="col" class="col-todo-edit">編集</th>
                 <th scope="col" class="col-todo-delete">削除</th>
             </tr>

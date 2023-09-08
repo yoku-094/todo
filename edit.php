@@ -3,7 +3,7 @@
     require('db_connect.php');
     session_start();
 
-    $_SESSION["userId"];
+    $user_id = $_SESSION["userId"];
     // URLのパラメータを取得
     $id = $_GET['id'];
 
@@ -41,8 +41,8 @@
         <h1>編集画面</h1>
     </div>
     <form action="edit_done.php" method="POST">
-        <input type="text" class="input-area" name="title" placeholder="Title" value="<?php echo $title;?>"> <br>
-        <input type="text" class="input-area" name="content" placeholder="Content" value="<?php echo $content;?>"> <br>
+        <input type="text" class="input-area" name="title" placeholder="Title" value="<?php echo htmlspecialchars($title, ENT_QUOTES); ?>"> <br>
+        <input type="text" class="input-area" name="content" placeholder="Content" value="<?php echo htmlspecialchars($content, ENT_QUOTES); ?>"> <br>
         <input type="hidden" name="id" value="<?php echo $id; ?>">
         <input type="submit" class="input-area submit" name="submit" value="更新">
     </form>
