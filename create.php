@@ -12,13 +12,6 @@
         $pdo = db_connect();
 
         try {
-            // 登録するTODOに振る番号の準備
-            $sql = "SELECT id FROM posts WHERE user_id = :user_id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(":user_id", $user_id);
-            $stmt->execute();
-            $count = $stmt->rowCount();
-
             // 新規登録
             $sql = "INSERT INTO posts (user_id, title, content) VALUES (:user_id, :title, :content)";
             $stmt = $pdo->prepare($sql);
