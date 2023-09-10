@@ -72,7 +72,12 @@
                 <td><?php echo $row["content"]; ?></td>
                 <td><?php echo $row["time"]; ?></td>
                 <td><a href="edit.php?id=<?php echo $row['id'];?>">編集</a></td>
-                <td><a href="delete.php?id=<?php echo $row['id'];?>">削除</a></td>
+                <td>
+                    <a href="delete.php?id=<?php echo $row['id'];?>" onclick="return deleteConfirm(<?php echo $row['id']; ?>, '<?php echo $row['title']; ?>', '<?php echo $row['content']; ?>')">
+                        削除
+                    </a>
+                </td>
+                
                 </tr>
             <?php
                 $todo_no++;
@@ -81,5 +86,17 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        function deleteConfirm(id, title, content) {
+            let confirmResult = confirm("以下の内容を削除しますか？\n\n課題 : " + title + "\n内容 : " + content);
+
+            let result = false;
+            if (confirmResult) {
+                result = true;
+            }
+            return result
+        }
+    </script>
   </body>
 </html>
