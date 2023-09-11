@@ -42,7 +42,8 @@
             <a href="create.php" ><button type="button" class="btn btn-primary">新規登録</button></a>
         </div>
         <div class="logout-btn-area">
-            <a href="logout.php" ><button type="button" class="btn btn-danger">ログアウト</button></a>
+        <a href="logout.php" ><button type="button" class="btn btn-danger">ログアウト</button></a>
+        <a href="user_delete.php" ><button type="button" class="btn btn-danger" style="margin-left: 10px;" onclick="return userDeleteConfirm()">ユーザー削除</button></a>
         </div>
     </div>
     
@@ -73,7 +74,7 @@
                 <td><?php echo $row["time"]; ?></td>
                 <td><a href="edit.php?id=<?php echo $row['id'];?>">編集</a></td>
                 <td>
-                    <a href="delete.php?id=<?php echo $row['id'];?>" onclick="return deleteConfirm(<?php echo $row['id']; ?>, '<?php echo $row['title']; ?>', '<?php echo $row['content']; ?>')">
+                    <a href="delete.php?id=<?php echo $row['id'];?>" onclick="return taskDeleteConfirm(<?php echo $row['id']; ?>, '<?php echo $row['title']; ?>', '<?php echo $row['content']; ?>')">
                         削除
                     </a>
                 </td>
@@ -88,8 +89,18 @@
     </div>
 
     <script>
-        function deleteConfirm(id, title, content) {
+        function taskDeleteConfirm(id, title, content) {
             let confirmResult = confirm("以下の内容を削除しますか？\n\n課題 : " + title + "\n内容 : " + content);
+
+            let result = false;
+            if (confirmResult) {
+                result = true;
+            }
+            return result
+        }
+
+        function userDeleteConfirm() {
+            let confirmResult = confirm("ユーザー削除画面に移動しますか？");
 
             let result = false;
             if (confirmResult) {

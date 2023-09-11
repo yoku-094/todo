@@ -110,3 +110,14 @@ form .submit:hover {
   width: 100%;
   text-align: right;
 }
+
+/* ユーザー削除画面 */
+.delete-user-content-area {
+  width: fit-content;
+  font-size: 24px;
+  margin: 0 auto;
+}
+.delete-user-content {
+  width: fit-content;
+  text-align: left;
+}
