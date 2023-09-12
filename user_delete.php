@@ -3,6 +3,12 @@
     require('db_connect.php');
     session_start();
 
+    // エラーメッセージがあれば表示
+    if ($_SESSION["userDeleteErrorMessage"]) {
+        $error_message = $_SESSION["userDeleteErrorMessage"];
+    }
+    unset($_SESSION["userDeleteErrorMessage"]);
+
     $user_id = $_SESSION["userId"];
     $user_name = $_SESSION["registerUserName"];
 
@@ -17,10 +23,9 @@
         echo $e->getMessage();
         die();
       }
-
     // 取得できたタイトルと本文を変数に入れておく
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $remainding_task_count = $row.count
+    $remainding_task_count = $row.count();
 ?>
 
 <!DOCTYPE html>
@@ -42,10 +47,23 @@
         <div class="delete-user-content" name="name" style="margin-bottom: 20px;">削除ユーザー：&nbsp;<?php echo $user_name; ?></div>
         <div class="delete-user-content" >登録タスク数：&nbsp;<?php echo $count; ?></div>
     </div>
-    <form action="delete_user_done.php" method="POST">
-        <input type="submit" class="input-area submit" name="submit" value="削除">
+    <form action="user_delete_done.php" method="POST">
+        <input type="password" class="input-area" name="password" placeholder="パスワードを入力してください" required> <br>
+        <input type="submit" class="input-area submit" name="submit" value="削除" onclick="return userDeleteConfirm()">
     </form>
-    <a href="main.php" class="return-main">メイン画面に戻る</a>
+    <p style="color: red;"><?php echo $error_message ?></p>
+    <p><a href="main.php" class="return-main">メイン画面に戻る</a></p>
+
+    <script>
+        function userDeleteConfirm() {
+            let confirmResult = confirm("ユーザーを削除します。\nよろしいですか？\n\n【！】削除後にデータを復元することはできません");
+            let result = false;
+            if (confirmResult) {
+                result = true;
+            }
+            return result;
+        }
+    </script>
 </body>
 
 </html>
